@@ -24,13 +24,13 @@ public class AdminResource {
 	public static final String ADMINS = "/admins";
 	public static final String STATE = "/state";
 	public static final String ECHO = "/echo";
-	public static final String ID = "/{id}";
 	public static final String BODY = "/body";
 	public static final String STRING_LIST = "/string-list";
 	public static final String DTO_LIST = "/dto-list";
 	public static final String ROOT_CONTROLLER = "/livros";
-	public static final String ALLBOOKS = "/tudos";
-	public static final String BOOK = "/livro";
+	
+	public static final String TUDOS = "/tudos";
+	public static final String LIVRO = "/livro";
 	public static final String TITULO = "/titulo";
 	public static final String GENERO = "/genero";
 	public static final String ISBN = "/isbn";
@@ -40,6 +40,7 @@ public class AdminResource {
 	public static final String ALUGAR = "/alugar";
 	public static final String ATUALIZAR = "/atualizar";
 	public static final String GUARDAR = "/guardar";
+	public static final String PARAM_ID = "/{id}";
 	public static final String PARAM_TITULO = "/{titulo}";
 	public static final String PARAM_GENERO = "/{genero}";
 	public static final String PARAM_ISBN = "/{isbn}";
@@ -51,48 +52,48 @@ public class AdminResource {
 	@Autowired
 	private LivroService livroService;
 
-	@RequestMapping(value = { "/tudos" }, method = { RequestMethod.GET })
+	@RequestMapping(value = { TUDOS }, method = { RequestMethod.GET })
 	public ResponseEntity<List<Livro>> getAllBlog() {
 		return new ResponseEntity(this.livroService.getAllLivro(), HttpStatus.OK);
 	}
 
-	@RequestMapping(value = { "/livro/{id}" }, method = { RequestMethod.GET })
-	public ResponseEntity<Livro> getToDoById(@PathVariable("id") long id) {
+	@RequestMapping(value = { LIVRO + PARAM_ID }, method = { RequestMethod.GET })
+	public ResponseEntity<Livro> getToDoById(@PathVariable(PARAM_ID) long id) {
 		return new ResponseEntity(this.livroService.getLivroById(id), HttpStatus.OK);
 	}
 
-	@RequestMapping(value = { "/titulo/{titulo}" }, method = { RequestMethod.GET })
-	public ResponseEntity<Livro> getToDoByTitulo(@PathVariable("titulo") String titulo) {
+	@RequestMapping(value = { TITULO + PARAM }, method = { RequestMethod.GET })
+	public ResponseEntity<Livro> getToDoByTitulo(@PathVariable(PARAM) String titulo) {
 		return new ResponseEntity(this.livroService.getLivroByTitulo(titulo), HttpStatus.OK);
 	}
 
-	@RequestMapping(value = { "/genero/{parametro}" }, method = { RequestMethod.GET })
-	public ResponseEntity<List<Livro>> getLivroByGenero(@PathVariable("parametro") String s) {
+	@RequestMapping(value = { GENERO + PARAM }, method = { RequestMethod.GET })
+	public ResponseEntity<List<Livro>> getLivroByGenero(@PathVariable(PARAM) String s) {
 		return new ResponseEntity(this.livroService.getLivroByGenero(s), HttpStatus.OK);
 	}
 
-	@RequestMapping(value = { "/isbn/{parametro}" }, method = { RequestMethod.GET })
-	public ResponseEntity<Livro> getLivroByIsbn(@PathVariable("parametro") String s) {
+	@RequestMapping(value = { ISBN + PARAM  }, method = { RequestMethod.GET })
+	public ResponseEntity<Livro> getLivroByIsbn(@PathVariable(PARAM) String s) {
 		return new ResponseEntity(this.livroService.getLivroByIsbn(s), HttpStatus.OK);
 	}
 
-	@RequestMapping(value = { "/autor/{parametro}" }, method = { RequestMethod.GET })
-	public ResponseEntity<List<Livro>> getLivroByAutor(@PathVariable("parametro") String s) {
+	@RequestMapping(value = { AUTOR + PARAM }, method = { RequestMethod.GET })
+	public ResponseEntity<List<Livro>> getLivroByAutor(@PathVariable(PARAM) String s) {
 		return new ResponseEntity(this.livroService.getLivroByAutor(s), HttpStatus.OK);
 	}
 
-	@RequestMapping(value = { "/disponivel/{parametro}" }, method = { RequestMethod.GET })
-	public ResponseEntity<List<Livro>> getLivroByDisponivel(@PathVariable("parametro") String s) {
+	@RequestMapping(value = { DISPONIVEL + PARAM }, method = { RequestMethod.GET })
+	public ResponseEntity<List<Livro>> getLivroByDisponivel(@PathVariable(PARAM) String s) {
 		return new ResponseEntity(this.livroService.getLivroByDisponivel(s), HttpStatus.OK);
 	}
 
-	@RequestMapping(value = { "/guardar" }, method = { RequestMethod.POST })
+	@RequestMapping(value = { GUARDAR }, method = { RequestMethod.POST })
 	public ResponseEntity<Livro> saveToDo(@RequestBody Livro l) {
 		return new ResponseEntity(this.livroService.saveLivro(l), HttpStatus.OK);
 	}
 
-	@RequestMapping(value = { "/retornar/{id}" }, method = { RequestMethod.GET })
-	public ResponseEntity<String> retornarLivro(@PathVariable("id") long id) {
+	@RequestMapping(value = { RETORNAR + PARAM_ID }, method = { RequestMethod.GET })
+	public ResponseEntity<String> retornarLivro(@PathVariable(PARAM_ID) long id) {
 		StringBuilder msg = new StringBuilder("");
 		Livro l = this.livroService.getLivroById(id);
 		l.setDisponivel("Sim");
@@ -105,8 +106,8 @@ public class AdminResource {
 		return new ResponseEntity(msg.toString(), HttpStatus.OK);
 	}
 
-	@RequestMapping(value = { "/alugar/{id}" }, method = { RequestMethod.GET })
-	public ResponseEntity<String> alugarLivro(@PathVariable("id") long id) {
+	@RequestMapping(value = { ALUGAR + PARAM_ID }, method = { RequestMethod.GET })
+	public ResponseEntity<String> alugarLivro(@PathVariable(PARAM_ID) long id) {
 		StringBuilder msg = new StringBuilder("");
 		Livro al = this.livroService.getLivroById(id);
 		if (al.getDisponivel().equals("Sim")) {
@@ -125,7 +126,7 @@ public class AdminResource {
 		return new ResponseEntity(msg.toString(), HttpStatus.OK);
 	}
 
-	@RequestMapping(value = { "/atualizar" }, method = { RequestMethod.PUT })
+	@RequestMapping(value = { ATUALIZAR }, method = { RequestMethod.PUT })
 	public ResponseEntity<String> updateToDo(@RequestBody Livro livroAnterior) {
 		StringBuilder msg = new StringBuilder("");
 		Livro l = this.livroService.getLivroById(livroAnterior.getId().longValue());
@@ -143,8 +144,8 @@ public class AdminResource {
 		return new ResponseEntity(msg.toString(), HttpStatus.OK);
 	}
 
-	@RequestMapping(value = { "/livro/{id}" }, method = { RequestMethod.DELETE })
-	public ResponseEntity<String> removeToDoById(@PathVariable("id") long id) {
+	@RequestMapping(value = { LIVRO + PARAM_ID }, method = { RequestMethod.DELETE })
+	public ResponseEntity<String> removeToDoById(@PathVariable(PARAM_ID) long id) {
 		StringBuilder msg = new StringBuilder("");
 		Livro l = this.livroService.getLivroById(id);
 		if (l.getDisponivel().equals("Sim")) {
