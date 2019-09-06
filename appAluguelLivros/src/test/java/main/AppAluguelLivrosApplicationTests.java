@@ -1,6 +1,9 @@
 package main;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
+
 import main.injection.LivroService;
 import main.persistence.jpa.entities.library.Livro;
 import main.restControllers.AdminResource;
@@ -35,17 +38,20 @@ public class AppAluguelLivrosApplicationTests {
 
 	@Autowired
 	private Environment environment;
+	private int microIterationTest;
 
 	@Before
 	public void setUp() {
 		this.livroNovo = new Livro("Python and Java vs PHP", "Contenido Java", "isbn7", "Ma", "Tecnologia", "Nao");
 		this.listLivro = this.livroService.getAllLivro();
+		
+		microIterationTest = Integer.parseInt( environment.getProperty("microIterationTest") );
+		logger.info("microIterationTest: " + microIterationTest);
+		logger.info(environment.getProperty("app.domain"));
 	}
 
 	@Test
 	public void contextLoads() {
-
-		logger.info(environment.getProperty("app.domain"));
 	}
 
 	@Test
@@ -117,4 +123,29 @@ public class AppAluguelLivrosApplicationTests {
 			System.out.println("Regra de Negocio 1: " + msg);
 		}
 	}
+	
+	@Test
+	public void AdminResource_alugarLivroNegadoRandomTest() {
+		Random r = new Random();
+		Livro l;
+
+		for (int i = 0; i <= microIterationTest ; i++ ) {
+		do {
+			l = (Livro) this.listLivro.get((int) r.nextInt(listLivro.size()) );
+			
+		}while (l.getDisponivel().equals("Sim")); 
+		System.out.println("Livro random: ");
+		System.out.println(l);
+		
+		if (l.getDisponivel().equals("Nao")) {
+			String msg = (String) this.adminResource.alugarLivro(l.getId().longValue()).getBody();
+
+			Assert.assertEquals(msg, "Nao",
+					((Livro) this.adminResource.getToDoById(l.getId().longValue()).getBody()).getDisponivel());
+
+			System.out.println("Regra de Negocio 1: " + msg);
+		}
+
+		}
+		}
 }
