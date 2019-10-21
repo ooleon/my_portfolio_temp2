@@ -12,4 +12,9 @@ Just few samples of my profesional works or test for some companies and rrhh ind
 	mobilecomputing.com.ar
 <br/>
 
+Tambem consegem ver outras probas feitas aqui:
+
+https://gitlab.com/ooleon/omnibustest
+
+https://gitlab.com/ooleon/agibank-qatest
 
