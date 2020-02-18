@@ -1,0 +1,88 @@
+name: Docker elasticsearch-action@v1 Image CI
+
+on: [push]
+
+jobs:      
+
+  ElasticSearch_instance:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: actions/checkout v2
+      uses: actions/checkout@v2
+
+    - name: Run ls Test
+      run: ls -l
+
+    - name: pwd
+      run: pwd
+
+    - name: Run ls Test
+      run: ls -l
+
+    - name: wget tar.gz
+      run: wget --progress=bar:force -O elasticsearch-5.6.16.tar.gz https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.6.16.tar.gz
+
+    - name: tar tar.gz
+      run: tar -xzf elasticsearch-5.6.16.tar.gz
+
+    - name: Run ls Test
+      run: ls -l
+
+    - name: cat elasticsearch.yml
+      run: cat /home/runner/work/java-client-elasticsearch/java-client-elasticsearch/elasticsearch-5.6.16/config/elasticsearch.yml
+
+    - name: cp elasticsearch.yml
+      run: cp /home/runner/work/java-client-elasticsearch/java-client-elasticsearch/elasticsearch.yml /home/runner/work/java-client-elasticsearch/java-client-elasticsearch/elasticsearch-5.6.16/config/elasticsearch.yml
+
+    - name: cat elasticsearch.yml
+      run: cat /home/runner/work/java-client-elasticsearch/java-client-elasticsearch/elasticsearch-5.6.16/config/elasticsearch.yml
+
+    - name: pwd
+      run: pwd
+
+    - name: RUN elasticsearch in background
+      run: /home/runner/work/java-client-elasticsearch/java-client-elasticsearch/elasticsearch-5.6.16/bin/./elasticsearch &
+
+    - name: Download Spring Boot (mvn)
+      run: mvn test -B -Dtest=ESMainTest test
+
+    - name: pwd
+      run: pwd
+
+    - name: Run ls Test
+      run: ls -l
+
+    # - uses: getong/elasticsearch-action@v1
+    #   with:
+    #     elasticsearch version: '5.6.16'
+    #     host port: 9200
+    #     container port: 9300
+    #     discovery type: 'single-node'
+
+    # - name: Run the Docker image mvn -v
+    #   run: mvn -v
+
+    # - name: Test pwd
+    #   run: pwd
+
+    - name: Run ls Test
+      run: ls -l
+           #docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+
+    - name: Run the mvn ESMainTest
+      run: mvn test -B -Dtest=ESMainTest test
+
+    - name: Run ss -tulw (observe the port 9300)
+      run: ss -tulw
+
+    - name: Run curl elastic cat/health verbose
+      run: curl http://127.0.0.1:9200/_cat/health?v
+
+    - name: Run curl elastic cat/status
+      run: curl http://127.0.0.1:9200/_cat/status
+
+    - name: Run curl elastic 9300 cat/status
+      run: curl http://127.0.0.1:9300/_cat/status
+

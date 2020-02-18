@@ -1,0 +1,7 @@
+---
+image: maven:alpine
+
+run_alltest:
+  stage: test
+  script:
+    - mvn -q test
