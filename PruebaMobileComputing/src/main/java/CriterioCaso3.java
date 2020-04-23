@@ -1,8 +1,3 @@
-package main;
-
-import java.util.Collection;
-import java.util.Map;
-
 /**
  * Clase generica que da la solución al caso 3º.
  */

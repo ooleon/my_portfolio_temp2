@@ -1,13 +1,9 @@
-package main;
-
 import java.util.ArrayList;
 import java.util.*;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class main {
+public class App {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

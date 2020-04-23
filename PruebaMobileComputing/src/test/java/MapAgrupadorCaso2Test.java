@@ -1,5 +1,3 @@
-package test;
-
 import static org.junit.Assert.*;
 
 import org.junit.Test;
@@ -10,13 +8,11 @@ import org.junit.Test;
 //import java.util.Map;
 import java.util.*;
 
-import main.*;
-
 /**
  * Caso2: residuo entre 5.
  */
 
-public class MapAgrupadorTestCaso2 {
+public class MapAgrupadorCaso2Test {
 
 	@Test
 	public void testAgruparPorCaso2() {

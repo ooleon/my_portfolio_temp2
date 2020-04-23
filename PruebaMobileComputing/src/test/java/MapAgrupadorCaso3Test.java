@@ -1,5 +1,3 @@
-package test;
-
 import static org.junit.Assert.*;
 
 import org.junit.Test;
@@ -10,13 +8,11 @@ import org.junit.Test;
 //import java.util.Map;
 import java.util.*;
 
-import main.*;
-
 /**
  * Caso3: agrupar por cantidad de vocales.
  */
 
-public class MapAgrupadorTestCaso3 {
+public class MapAgrupadorCaso3Test {
 
 	@Test
 	public void testAgruparPorCaso1() {
