@@ -1,6 +1,6 @@
 package main;
 
-import main.persistence.jpa.entities.library.Livro;
+import main.persistence.jpa.entities.Livro;
 import main.repository.LivroRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

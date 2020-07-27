@@ -1,0 +1,10 @@
+/home/doc/opt/github/ooleon/my_portfolio/appAluguelLivros/src/main/java/main/repository/LivroRepository.java
+/home/doc/opt/github/ooleon/my_portfolio/appAluguelLivros/src/main/java/main/persistence/jpa/entities/Livro.java
+/home/doc/opt/github/ooleon/my_portfolio/appAluguelLivros/src/main/java/main/persistence/jpa/entities/dao/LivroDao.java
+/home/doc/opt/github/ooleon/my_portfolio/appAluguelLivros/src/main/java/main/restControllers/WebSecurityConfig.java
+/home/doc/opt/github/ooleon/my_portfolio/appAluguelLivros/src/main/java/main/injection/LivroService.java
+/home/doc/opt/github/ooleon/my_portfolio/appAluguelLivros/src/main/java/main/util/LivroUtil.java
+/home/doc/opt/github/ooleon/my_portfolio/appAluguelLivros/src/main/java/main/AppAluguelLivrosApplication.java
+/home/doc/opt/github/ooleon/my_portfolio/appAluguelLivros/src/main/java/main/restControllers/MvcConfig.java
+/home/doc/opt/github/ooleon/my_portfolio/appAluguelLivros/src/main/java/main/ServletInitializer.java
+/home/doc/opt/github/ooleon/my_portfolio/appAluguelLivros/src/main/java/main/restControllers/AdminResource.java

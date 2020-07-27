@@ -4,7 +4,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import main.injection.LivroService;
-import main.persistence.jpa.entities.library.Livro;
+import main.persistence.jpa.entities.Livro;
+import main.util.LivroUtil;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -96,11 +97,11 @@ public class AdminResource {
 	public ResponseEntity<String> retornarLivro(@PathVariable("id") long id) {
 		StringBuilder msg = new StringBuilder("");
 		Livro l = this.livroService.getLivroById(id);
-		l.setDisponivel("Sim");
 		this.livroService.saveLivro(l);
+		l.setDisponivel(LivroUtil.SIM);
 		msg.append("Livro: ID: " + l.getId());
 		msg.append(" Titulo: " + l.getTitulo());
-		msg.append(" foi retornado com sucesso!!");
+		msg.append(LivroUtil.RETORNADO_COM_SUCESSO);
 
 		logger.info(msg.toString());
 		return new ResponseEntity(msg.toString(), HttpStatus.OK);
@@ -110,18 +111,21 @@ public class AdminResource {
 	public ResponseEntity<String> alugarLivro(@PathVariable("id") long id) {
 		StringBuilder msg = new StringBuilder("");
 		Livro al = this.livroService.getLivroById(id);
-		if (al.getDisponivel().equals("Sim")) {
-			al.setDisponivel("Nao");
-			this.livroService.saveLivro(al);
-			msg.append("Livro: ID: " + al.getId());
-			msg.append(" Titulo: " + al.getTitulo());
-			msg.append(" foi alugado com sucesso!!");
-		} else {
-			msg.append("Livro: " + al.getId());
-			msg.append(" Titulo:" + al.getTitulo());
-			msg.append(" :-( nao disponible :-(");
+		
+		if (al != null) {
+			if (this.livroService.alugarLivro(id)) {
+				msg.append("Livro: ID: " + al.getId());
+				msg.append(" Titulo: " + al.getTitulo());
+				msg.append(LivroUtil.ALUGADO_COM_SUCESSO);
+			}else {
+				msg.append("Livro: " + al.getId());
+				msg.append(" Titulo:" + al.getTitulo());
+				msg.append(LivroUtil.NAO_DISPONIVEL);
+			}
+		}else {
+			msg.append("id: " + id + LivroUtil.NAO_CONSEGUIDO );
 		}
-
+			
 		logger.info(msg.toString());
 		return new ResponseEntity(msg.toString(), HttpStatus.OK);
 	}
@@ -129,17 +133,23 @@ public class AdminResource {
 	@RequestMapping(value = { ATUALIZAR }, method = { RequestMethod.PUT })
 	public ResponseEntity<String> updateToDo(@RequestBody Livro livroAnterior) {
 		StringBuilder msg = new StringBuilder("");
-		Livro l = this.livroService.getLivroById(livroAnterior.getId().longValue());
-		if (l.getDisponivel().equals("Sim")) {
-			this.livroService.saveLivro(livroAnterior);
-			msg.append("Livro: ID: " + l.getId());
-			msg.append(" Titulo: " + l.getTitulo());
-			msg.append(" foi atualizado com sucesso!!");
-		} else {
-			msg.append("Livro " + l.getId() + l.getTitulo());
-			msg.append(" :-( nao disponible, nao pode ser atualizado :-(");
-		}
+		Livro al = this.livroService.getLivroById(livroAnterior.getId().longValue());
 
+		if (al != null) {
+			if (this.livroService.editarLivro(al) != null) {
+				msg.append("Livro: ID: " + al.getId());
+				msg.append(" Titulo: " + al.getTitulo());
+				msg.append(LivroUtil.ATUALIZADO);
+			}else {
+				msg.append("Livro: " + al.getId());
+				msg.append(" Titulo:" + al.getTitulo());
+				msg.append(LivroUtil.NAO_DISPONIVEL);
+				msg.append(", nao pode ser atualizado :-(");
+			}
+		}else {
+			msg.append("id: " + livroAnterior.getId().longValue() + LivroUtil.NAO_CONSEGUIDO );
+		}
+		
 		logger.info(msg.toString());
 		return new ResponseEntity(msg.toString(), HttpStatus.OK);
 	}
@@ -148,11 +158,11 @@ public class AdminResource {
 	public ResponseEntity<String> removeToDoById(@PathVariable("id") long id) {
 		StringBuilder msg = new StringBuilder("");
 		Livro l = this.livroService.getLivroById(id);
-		if (l.getDisponivel().equals("Sim")) {
+		if (l.getDisponivel().equals(LivroUtil.SIM)) {
 			this.livroService.removeLivro(l);
 			msg.append("Livro: ID: " + l.getId());
 			msg.append("Titulo: " + l.getTitulo());
-			msg.append("foi removido com sucesso!!");
+			msg.append(LivroUtil.REMOVIDO_SUCESSO);
 		} else {
 			msg.append("Livro " + l.getId() + l.getTitulo());
 			msg.append(" :-( nao disponible, nao pode ser removido :-(");

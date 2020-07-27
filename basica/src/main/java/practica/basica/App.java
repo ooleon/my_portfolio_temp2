@@ -1,13 +1,14 @@
-package practica.basica;
-
 /**
- * Hello world!
+ * 
  * @author Leo ostyleon@hotmail.com
  */
-public class App 
+package practica.basica;
+
+import practica.basica.def.*;
+
+public class App
 {
-    public static void main( String[] args )
-    {
-        System.out.println( "Hello World!" );
-    }
+	public static void main(String...args ) {
+		System.out.println("App: " + args[0]);
+	}
 }

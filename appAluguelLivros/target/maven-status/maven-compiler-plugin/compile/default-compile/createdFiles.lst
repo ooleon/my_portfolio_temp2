@@ -1,0 +1,10 @@
+main/restControllers/MvcConfig.class
+main/restControllers/AdminResource.class
+main/persistence/jpa/entities/Livro.class
+main/util/LivroUtil.class
+main/restControllers/WebSecurityConfig.class
+main/injection/LivroService.class
+main/repository/LivroRepository.class
+main/ServletInitializer.class
+main/AppAluguelLivrosApplication.class
+main/persistence/jpa/entities/dao/LivroDao.class

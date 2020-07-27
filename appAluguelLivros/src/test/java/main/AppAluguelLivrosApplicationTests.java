@@ -5,8 +5,9 @@ import java.util.List;
 import java.util.Random;
 
 import main.injection.LivroService;
-import main.persistence.jpa.entities.library.Livro;
+import main.persistence.jpa.entities.Livro;
 import main.restControllers.AdminResource;
+import main.util.LivroUtil;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,6 +20,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.core.env.Environment;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.web.bind.annotation.RestController;
 
 @RunWith(org.springframework.test.context.junit4.SpringRunner.class)
 @SpringBootTest
@@ -42,16 +44,19 @@ public class AppAluguelLivrosApplicationTests {
 
 	@Before
 	public void setUp() {
-		this.livroNovo = new Livro("Python and Java vs PHP", "Contenido Java", "isbn7", "Ma", "Tecnologia", "Nao");
+		this.livroNovo = new Livro("Python and Java vs PHP", "Contenido Java", "isbn7", "Ma", "Tecnologia",
+				LivroUtil.NAO);
 		this.listLivro = this.livroService.getAllLivro();
-		
-		microIterationTest = Integer.parseInt( environment.getProperty("microIterationTest") );
+
+		microIterationTest = Integer.parseInt(environment.getProperty("microIterationTest"));
 		logger.info("microIterationTest: " + microIterationTest);
 		logger.info(environment.getProperty("app.domain"));
 	}
 
 	@Test
 	public void contextLoads() {
+		System.out.println("contextLoads");
+		logger.debug("contextLoads");
 	}
 
 	@Test
@@ -98,54 +103,82 @@ public class AppAluguelLivrosApplicationTests {
 	}
 
 	@Test
-	public void AdminResource_alugarLivroTest() {
-		Livro l = (Livro) this.listLivro.get(1);
-		if (this.listLivro != null && !this.listLivro.isEmpty()) {
-			if (l.getDisponivel().equals("Sim")) {
-				String msg = (String) this.adminResource.alugarLivro(l.getId().longValue()).getBody();
-				Assert.assertEquals(msg, "Nao", (
+	public void servicoEditarLivroTest() {
+		Livro al = (Livro) this.livroService.getLivroById(this.listLivro.get(1).getId());
+		StringBuilder msg = new StringBuilder("");
+		if (al.getDisponivel() == LivroUtil.NAO) {
+			al.setConteudo("test para modificar diferente conteudo");
+			// livro nao pode ser edidado por nao estar disponivel
+			Assert.assertEquals(this.livroService.editarLivro(al), null);
+		}else {
+			al.setConteudo("test para modificar diferente conteudo");
+			// livro pode ser edidado por estar disponivel
+			Livro lSalvado = this.livroService.editarLivro(al);
+			Assert.assertEquals(lSalvado.getConteudo(), al.getConteudo());
 
-				(Livro) this.adminResource.getToDoById(l.getId().longValue()).getBody()).getDisponivel());
-				logger.trace("alugarLivroTest: " + msg);
-			}
 		}
+	}
+
+	@Test
+	public void AdminResource_alugarLivroTest() {
+		Livro al = (Livro) this.listLivro.get(1);
+		StringBuilder msg = new StringBuilder("");
+		if (this.livroService.alugarLivro(al.getId())) {
+			msg.append("Livro: ID: " + al.getId());
+			msg.append(" Titulo: " + al.getTitulo());
+			msg.append(LivroUtil.ALUGADO_COM_SUCESSO);
+		} else {
+			msg.append("Livro: " + al.getId());
+			msg.append(" Titulo:" + al.getTitulo());
+			msg.append(LivroUtil.NAO_DISPONIVEL);
+		}
+
+		al = (Livro) this.livroService.getLivroById(al.getId());
+		// Livro salvado e Disponivel = nao.
+		Assert.assertEquals(al.getDisponivel(), LivroUtil.NAO);
+
+		String msg1 = (String) this.adminResource.alugarLivro(al.getId().longValue()).getBody();
+		// RestController para o livro da Valor de Disponivel = nao.
+		Assert.assertEquals(msg1, LivroUtil.NAO,
+				((Livro) this.adminResource.getToDoById(al.getId().longValue()).getBody()).getDisponivel());
+		logger.trace("alugarLivroTest: " + msg1);
 	}
 
 	@Test
 	public void AdminResource_alugarLivroNegadoTest() {
 		Livro l = (Livro) this.listLivro.get(0);
-		if (l.getDisponivel().equals("Nao")) {
+		if (l.getDisponivel().equals(LivroUtil.NAO)) {
 			String msg = (String) this.adminResource.alugarLivro(l.getId().longValue()).getBody();
 
-			Assert.assertEquals(msg, "Nao",
+			Assert.assertEquals(msg, LivroUtil.NAO,
 					((Livro) this.adminResource.getToDoById(l.getId().longValue()).getBody()).getDisponivel());
 
-			System.out.println("Regra de Negocio 1: " + msg);
+			logger.trace("Regra de Negocio 1: " + msg);
 		}
 	}
-	
+
 	@Test
 	public void AdminResource_alugarLivroNegadoRandomTest() {
 		Random r = new Random();
 		Livro l;
 
-		for (int i = 0; i <= microIterationTest ; i++ ) {
-		do {
-			l = (Livro) this.listLivro.get((int) r.nextInt(listLivro.size()) );
-			
-		}while (l.getDisponivel().equals("Sim")); 
-		System.out.println("Livro random: ");
-		System.out.println(l);
-		
-		if (l.getDisponivel().equals("Nao")) {
-			String msg = (String) this.adminResource.alugarLivro(l.getId().longValue()).getBody();
+		for (int i = 0; i <= microIterationTest; i++) {
+			do {
+				l = (Livro) this.listLivro.get((int) r.nextInt(listLivro.size()));
 
-			Assert.assertEquals(msg, "Nao",
-					((Livro) this.adminResource.getToDoById(l.getId().longValue()).getBody()).getDisponivel());
+			} while (l.getDisponivel().equals(LivroUtil.SIM));
+			logger.trace("Livro random: ");
+			logger.trace(l);
 
-			System.out.println("Regra de Negocio 1: " + msg);
-		}
+			if (l.getDisponivel().equals(LivroUtil.NAO)) {
+				String msg = this.adminResource.alugarLivro(l.getId().longValue()).getBody();
+
+				Assert.assertEquals(msg, LivroUtil.NAO,
+						(this.adminResource.getToDoById(l.getId().longValue()).getBody()).getDisponivel());
+
+				logger.trace("Regra de Negocio 1: " + msg);
+			}
 
 		}
-		}
+	}
 }
