@@ -8,6 +8,8 @@ project/plugins/project/*
 project/plugins/target/*
 project/target/*
 target/*
+target
+/target/
 .idea
 .idea/*
 *.iml
