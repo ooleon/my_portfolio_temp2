@@ -18,7 +18,7 @@
 	<description>Rest Livros em Aluguel projeto em Spring Boot Rest, QA teste</description>
 
 	<properties>
-		<java.version>1.8</java.version>
+		<java.version>25</java.version>
 	</properties>
 
 	<dependencies>

@@ -16,9 +16,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Spy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.SpyBean;
+//import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.core.env.Environment;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,7 +35,8 @@ class AppAluguelLivrosApplicationTests {
 
 	private static final Logger logger = LogManager.getLogger(AppAluguelLivrosApplicationTests.class);
 
-	@SpyBean
+    //    @SpyBean
+    @Spy
 	@Autowired
 	private AdminResource adminResource;
 

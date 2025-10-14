@@ -1,8 +1,14 @@
 package main.persistence.jpa.entities;
-
+//old version
+/*
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+*/
+//new version
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 
 @Entity
 public class Livro {
