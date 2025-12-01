@@ -57,7 +57,6 @@ class AppAluguelLivrosApplicationTests {
 
     @Test
     void contextLoads() {
-		System.out.println("contextLoads");
 		logger.debug("contextLoads");
 	}
 

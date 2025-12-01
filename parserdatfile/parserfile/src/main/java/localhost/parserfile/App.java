@@ -5,6 +5,7 @@ import java.util.*;
 
 import javax.swing.event.ListSelectionEvent;
 
+import com.opencsv.exceptions.CsvValidationException;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 
@@ -101,7 +102,7 @@ public class App {
 
 	}
 
-	private void semicolonParse(File f) throws FileNotFoundException, IOException {
+	private void semicolonParse(File f) throws FileNotFoundException, IOException, CsvValidationException {
 		// openCSV reader to parse the CSV file
 		CSVReader reader = new CSVReader(new FileReader(f));
 

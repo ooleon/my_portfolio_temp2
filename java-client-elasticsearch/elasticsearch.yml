@@ -41,7 +41,7 @@ cluster.name: elasticsearch_my_cluster_leo
 # Path to log files:
 #
 #path.logs: /path/to/logs
-path.logs: /home/runner/work/java-client-elasticsearch/java-client-elasticsearch/elasticsearch-5.6.16/logs/logs
+path.logs: /home/runner/work/java-client-elasticsearch/java-client-elasticsearch/elasticsearch-9.1.5/logs/logs
 #
 # ----------------------------------- Memory -----------------------------------
 #

@@ -1,8 +1,10 @@
 package elasticsearch.app;
 
+import java.io.IOException;
 import java.util.Arrays;
 
-import org.elasticsearch.client.Client;
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+
 
 import elasticsearch.service.CountService;
 import elasticsearch.service.DataService;
@@ -20,14 +22,14 @@ import org.springframework.stereotype.Service;
 //@Service
 public class ESMain {
 	public static void main(String[] args) throws Exception{
-	app();
+//	app();
 	}
 
 	public static String test(){
 		return "-> test com sucesso <-";
 	}
 
-	public static void insertData(IngestService ingestService, Client client) {
+	public static void insertData(IngestService ingestService, ElasticsearchClient client) throws IOException {
 
 		// Ingest
 		String json = "{" + "\"user\":\"jhon\"," + "\"postDate\":\"2017-10-30\","
@@ -56,8 +58,9 @@ public class ESMain {
 	}
 	public static void app()  throws Exception {
 		{
+
 			ESTransportClient esTransportClient = new ESTransportClient();
-			Client client = esTransportClient.getClient(
+            ElasticsearchClient client = esTransportClient.getClient(
 					"elasticsearch_my_cluster_leo", "127.0.0.1", 9300).get();
 
 			CountService countService = new CountService(client);
@@ -67,9 +70,9 @@ public class ESMain {
 
 			// count
 			System.out.println("\ngetMatchAllQueryCount from ES::: " + countService.getMatchAllQueryCount());
-			System.out.println("\ngetBoolQueryCount from ES::: " + countService.getBoolQueryCount());
-			System.out.println("\ngetPhraseQueryCount from ES::: " + countService.getPhraseQueryCount());
-
+//			System.out.println("\ngetBoolQueryCount from ES::: " + countService.getBoolQueryCount());
+//			System.out.println("\ngetPhraseQueryCount from ES::: " + countService.getPhraseQueryCount());
+/*
 			// Data
 			System.out.println("\ngetMatchAllQueryData from ES::: ");
 			dataService.getMatchAllQueryData().forEach(item -> System.out.println(item));
@@ -109,7 +112,11 @@ public class ESMain {
 
 			System.out.println("\ngetPhraseQueryData from ES::: ");
 			dataService.getPhraseQueryData().forEach(item -> System.out.println(item));
+*/
 
+            /** cerrar la conexión como antes.
+             */
+            client._transport().close();
 		}
 	}
 
