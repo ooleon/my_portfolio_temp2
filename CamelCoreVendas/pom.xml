@@ -14,9 +14,9 @@
     <properties>
         <java.version>11</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-<!--        <camel.version>3.21.4</camel.version>-->
+        <camel.version>3.22.2</camel.version>
 <!--        <camel.version>4.14.0</camel.version>-->
-        <camel.version>3.0.0-M4</camel.version>
+<!--        <camel.version>3.0.0-M4</camel.version>-->
     </properties>
 
 
@@ -48,7 +48,7 @@
         <dependency>
             <groupId>org.apache.camel</groupId>
             <artifactId>camel-spring</artifactId>
-            <version>${camel.version}</version>
+            <version>3.22.2</version>
         </dependency>
         <dependency>
             <groupId>org.apache.camel</groupId>
@@ -56,37 +56,40 @@
             <version>${camel.version}</version>
         </dependency>
 
-
         <!-- https://mvnrepository.com/artifact/org.apache.camel/camel-jms -->
         <dependency>
             <groupId>org.apache.camel</groupId>
             <artifactId>camel-jms</artifactId>
-            <version>${camel.version}</version>
+            <version>3.22.2</version>
         </dependency>
-        <dependency>
-            <groupId>org.apache.camel</groupId>
-            <artifactId>camel</artifactId>
-            <version>${camel.version}</version>
-        </dependency>
+
+        <!--        <dependency>-->
+        <!--            <groupId>org.apache.camel</groupId>-->
+        <!--            <artifactId>camel</artifactId>-->
+        <!--            <version>${camel.version}</version>-->
+        <!--        </dependency>-->
+
+<!-- https://mvnrepository.com/artifact/org.apache.camel/camel-quartz -->
         <dependency>
             <groupId>org.apache.camel</groupId>
             <artifactId>camel-quartz</artifactId>
-            <version>${camel.version}</version>
+            <version>3.22.2</version>
         </dependency>
+
 
 
         <!-- https://mvnrepository.com/artifact/org.apache.activemq/activemq-all -->
         <dependency>
             <groupId>org.apache.activemq</groupId>
             <artifactId>activemq-all</artifactId>
-            <version>5.15.3</version>
+            <version>5.15.15</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-log4j12 -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
-            <version>1.7.25</version>
+            <version>1.7.33</version>
             <scope>test</scope>
         </dependency>
 
@@ -97,10 +100,10 @@
     <build>
         <plugins>
             <!-- Allows the routes to be run via 'mvn camel:run' -->
-            <plugin>
-                <groupId>org.apache.camel</groupId>
-                <artifactId>camel</artifactId>
-            </plugin>
+            <!--            <plugin>-->
+            <!--                <groupId>org.apache.camel</groupId>-->
+            <!--                <artifactId>camel</artifactId>-->
+            <!--            </plugin>-->
         </plugins>
     </build>
 </project>
