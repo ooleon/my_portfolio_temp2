@@ -14,7 +14,7 @@
     <properties>
         <java.version>11</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <camel.version>3.22.2</camel.version>
+        <camel.version>4.14.6</camel.version>
         <junit.version>4.13.1</junit.version>
         <activemq-all.version>5.19.6</activemq-all.version>
         <lf4j-log4j12>1.7.33</lf4j-log4j12>
@@ -63,7 +63,6 @@
         <dependency>
             <groupId>org.apache.camel</groupId>
             <artifactId>camel-jms</artifactId>
-            <version>4.14.6</version>
             <version>${camel.version}</version>
         </dependency>
 
