@@ -34,7 +34,7 @@
         <java.version>25</java.version>
         <spring-restdocs.version>2.0.4.RELEASE</spring-restdocs.version>
         <docker.image.prefix>springio</docker.image.prefix>
-        <co.elastic.clients>9.1.10</co.elastic.clients> <9.4.2 !-- or latest -->
+        <co.elastic.clients>9.1.10</co.elastic.clients> <!-- 9.4.2 or latest -->
         <org.elasticsearch.client>9.1.10</org.elasticsearch.client>
         <junit.version>4.13.2</junit.version>
     </properties>
