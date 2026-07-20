@@ -16,7 +16,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <camel.version>4.14.6</camel.version>
         <junit.version>4.13.1</junit.version>
-        <activemq-all.version>5.19.6</activemq-all.version>
+        <activemq-all.version>5.19.7</activemq-all.version>
         <lf4j-log4j12>1.7.33</lf4j-log4j12>
 <!--        <camel.version>4.14.0</camel.version>-->
 <!--        <camel.version>3.0.0-M4</camel.version>-->
